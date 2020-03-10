@@ -1,0 +1,84 @@
+#Navbar {
+    text-emphasis: inherit;
+    text-align: center;
+    text-decoration: double;
+    font-size: 2vh;
+    background-color: white;
+    flex: 0.1;
+    display: flex;
+    justify-content: space-between;
+}
+
+.Button {
+    background-color: white; 
+    border: 2px solid black;
+    border-radius: 25%;
+    color: black;   
+    padding: 15px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 2vh;
+    margin: 4px 2px;
+    cursor: pointer;
+    transition-duration: 0.4s;
+}
+
+.Button:hover  {
+    border-radius: 50%;
+    background-color: black;
+    color: white;
+}
+
+
+#Article {
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+}
+
+#Article-Header {
+    flex: 1;
+    height: 100%;
+    background-image: url('../news.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: auto;
+    display: flex;
+
+}
+
+#Article-Heading {
+    align-self: flex-end;
+    background-color: black;
+    color: white;
+    width: 100%;
+    font-size: 5vh;
+    opacity: 0.8;
+}
+
+#Article-Body {
+    flex: 1;
+    height: 40%;
+    display: flex;
+}
+
+#Article-Paragraphs {
+    flex: 1;
+    font-size: 3vh;
+    overflow-y: auto;
+}
+
+#Article-List {
+    flex: 1;
+    font-size: 3vh;
+    overflow-y: auto;
+}
+
+#Article-Paragraphs:empty {
+    display: none;
+}
+
+#Article-List:empty {
+    display: none;
+}
