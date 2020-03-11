@@ -87,14 +87,14 @@ class Article extends Component {
         if(!this.article.paragraphs){
             return
         }
-        return this.article.paragraphs.map((para)=>{
-            return (<p>{para}</p>)
+        return this.article.paragraphs.map((para, ind)=>{
+            return (<p key={String(ind)}>{para}</p>)
         })
     }
 
     prepare_list(l_items){
-        return l_items.map((itm)=>{
-        return (<li>{itm}</li>)
+        return l_items.map((itm, ind)=>{
+        return (<li key={String(ind)}>{itm}</li>)
         })
     }
 
@@ -102,11 +102,11 @@ class Article extends Component {
         if(!this.article.list){
             return
         }
-        return this.article.list.map((l)=>{
+        return this.article.list.map((l, ind)=>{
             if (l.type === "unordered")
-                return (<ul>{this.prepare_list(l.items)}</ul>)
+                return (<ul key={String(ind)}>{this.prepare_list(l.items)}</ul>)
             else
-                return (<ol>{this.prepare_list(l.items)}</ol>)
+                return (<ol key={String(ind)}>{this.prepare_list(l.items)}</ol>)
         })
     }
 

@@ -53,31 +53,29 @@ class Ranker extends Component {
     }
 
     get_input_fields(title_ind){
-        return this.state.headers.map((element)=>{
-            if(element!=="Title"){
-                let ip_field_name="" + title_ind + "_" + element
+        return this.state.rank_headers.map((element, ind)=>{
+            let ip_field_name="" + title_ind + "_" + element
                 return(
-                    <td>
+                    <td key={String(ind)}>
                         <input type="number" id={ip_field_name} name={ip_field_name} onChange={(e)=>{
                             this.handleChange(e, ip_field_name)
                         }} min="0" max="5" required/>
                     </td>
                 )
-            }
         })
     }
 
     get_headers(){
-        return this.state.headers.map((element)=>{
-            return (<th> {element} </th>)
+        return this.state.headers.map((element, ind)=>{
+            return (<th key={String(ind)}> {element} </th>)
         })
     }
 
     get_rows(){
         return this.state.titles.map((element, ind)=>{
             return(
-                <tr>
-                    <td>
+                <tr key={String(ind)}>
+                    <td key={String(ind*2)}>
                         {element}
                     </td>
                     {this.get_input_fields(ind)}
@@ -112,7 +110,9 @@ class Ranker extends Component {
                 <form onSubmit={this.submitRanking.bind(this)}>
                     <table>
                         <thead>
-                            {this.get_headers()}
+                            <tr>
+                                {this.get_headers()}
+                            </tr>
                         </thead>
                         <tbody>
                             {this.get_rows()}
