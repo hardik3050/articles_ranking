@@ -1,29 +1,126 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import './Ranker.css';
 
 class Ranker extends Component {
-    
-    state={
-        titles:[]
+
+    handleChange(e, ind){
+        let dummy_dict = this.state.ratings
+        dummy_dict[ind] = e.target.value
+        localStorage.setItem(ind, dummy_dict[ind])
+        this.setState({
+            ratings:dummy_dict
+        })
+        dummy_dict=null
     }
 
-    componentDidMount(){
-        var titles = []
-        for(var i=0;i<5;i++){
-            var ls_key="article-" + String(i+1)
-            titles.push(localStorage.getItem(ls_key))
-        }
+    state = {
+        done:false,
+        titles: [],
+        rank_headers: ["Informative","Timeliness","Content-Quality","Length of Article(Time to read)"],
+        ratings: {}
+    }
+
+    state = {
+        ...this.state,
+        headers: [
+            "Title",
+            ...this.state.rank_headers
+        ],
+    }
+
+    submitRanking(e){
+        e.preventDefault()
+        let rank = {}
+            for(let i=0;i<5;i++){
+                rank[i]=0
+                this.state.rank_headers.map((element)=>{
+                    let field_name = "" + i + "_" + element
+                    rank[i] = rank[i] + parseInt(localStorage.getItem(field_name))
+                    return null
+                })
+                rank[i] = rank[i]/4;
+                // rank[i] = 0
+                // let field_name = "" + i + "_" + element
+                // rank[i] = rank[i] + parseInt(localStorage.getItem(field_name))
+                // rank.concat(this.state.rank_headers.map((element)=>{
+                //     return parseInt(localStorage.getItem(field_name))
+                // }))
+            }
+
         this.setState({
-            titles:titles
+            done:true
         })
     }
 
-    render(){
-        return(
+    get_input_fields(title_ind){
+        return this.state.headers.map((element)=>{
+            if(element!=="Title"){
+                let ip_field_name="" + title_ind + "_" + element
+                return(
+                    <td>
+                        <input type="number" id={ip_field_name} name={ip_field_name} onChange={(e)=>{
+                            this.handleChange(e, ip_field_name)
+                        }} min="0" max="5" required/>
+                    </td>
+                )
+            }
+        })
+    }
+
+    get_headers(){
+        return this.state.headers.map((element)=>{
+            return (<th> {element} </th>)
+        })
+    }
+
+    get_rows(){
+        return this.state.titles.map((element, ind)=>{
+            return(
+                <tr>
+                    <td>
+                        {element}
+                    </td>
+                    {this.get_input_fields(ind)}
+                </tr>
+            )
+        })
+        // return <br/>
+    }
+
+    componentDidMount() {
+        var titles = []
+        for (var i = 0; i < 5; i++) {
+            var ls_key = "article-" + String(i + 1)
+            titles.push(localStorage.getItem(ls_key))
+        }
+        this.setState({
+            titles: titles
+        })
+    }
+
+    render() {
+        if(this.state.done){
+            return(
+                <div>
+                    Thank You!!<br/>
+                    We appriciate your feedback!!
+                </div>
+            )
+        }
+        return (
             <div>
-                This is Ranker Component..
-                <br />
-                {this.state.titles}
+                <form onSubmit={this.submitRanking.bind(this)}>
+                    <table>
+                        <thead>
+                            {this.get_headers()}
+                        </thead>
+                        <tbody>
+                            {this.get_rows()}
+                        </tbody>
+                    </table>
+                    {/* <subi onClick={this.submitRanking.bind(this)}>Submit</button> */}
+                    <button type="submit">Submit</button>
+                </form>
             </div>
         )
     }
