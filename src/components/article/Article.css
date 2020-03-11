@@ -40,7 +40,7 @@
 #Article-Header {
     flex: 1;
     height: 100%;
-    background-image: url('../news.png');
+    background-image: url('../../news.png');
     background-repeat: no-repeat;
     background-position: center;
     background-size: auto;

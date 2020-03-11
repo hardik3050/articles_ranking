@@ -1,16 +1,37 @@
 import React, {Component} from 'react';
 import './Article.css';
-import NewsImage from '../news.png';
+import NewsImage from '../../news.png';
+import Ranker from '../ranker/Ranker';
 
 class Article extends Component {
 
     total_article = 5
-    article_number = 0
+    article_number = 1
 
-    get_next_article_link(){
-        if (this.article_number<this.total_article){
+    get_article_link(){
+        return 'https://raw.githubusercontent.com/bbc/news-coding-test-dataset/master/data/article-'+ this.article_number +'.json'
+    }
+
+    nextNews(){
+        var ls_key="article-" + String(this.article_number)
+        localStorage.setItem(ls_key, this.state.title)
+
+        if(this.article_number===this.total_article){
+            this.setState({
+                end_of_articles:true        
+            })
+            return
+        }
+
+        if (this.article_number<this.total_article)
             this.article_number++
-            return 'https://raw.githubusercontent.com/bbc/news-coding-test-dataset/master/data/article-'+ this.article_number +'.json'
+            this.load_news()
+    }
+
+    prevNews(){
+        if (this.article_number>1){
+            this.article_number--
+            this.load_news()
         }
     }
     
@@ -20,7 +41,8 @@ class Article extends Component {
             heading: '',
             paragraphs: [],
             images: [],
-            lists: []
+            lists: [],
+            end_of_articles:false
     }
 
     article={
@@ -94,7 +116,7 @@ class Article extends Component {
             var image_tag = document.getElementById("Article-Header")
             if (this.state.images.length!==0){
                 var image = this.state.images[i]
-                image_tag.style.backgroundImage = "url("+ image.url +")";
+                image_tag.style.backgroundImage = "url("+ image.url + "=" +  (this.article_number+1)*(i+1) +")";
                 image_tag.alt = image.altText
                 if(i < this.state.images.length - 1){
                     i++;
@@ -106,23 +128,14 @@ class Article extends Component {
                 image_tag.alt = 'News Icon'
             }
         },
-        1000)
+        1500)
     }
 
     async load_news(){
-        const res1 = await fetch(this.get_next_article_link())
+        let link = this.get_article_link()
+        const res1 = await fetch(link)
         var json_resp1 = await res1.json()
         this.build_data(json_resp1)
-        // if(this.article.paragraphs.length == 0){
-        //     var para_tag = document.getElementById("Article-Paragraphs");
-        //     para_tag.style.display = 'none'
-
-        // }
-        // if(this.article.list.length == 0){
-        //     var list_tag = document.getElementById("Article-List");
-        //     list_tag.style.display = 'none'
-
-        // }
         this.setState({
             loading: false,
             title: this.article.title,
@@ -131,12 +144,11 @@ class Article extends Component {
             images: this.article.images,
             lists: this.get_lists()
         })
+        this.article=null
         clearInterval(this.interval)
+        document.getElementById("Article-Header").style.backgroundImage = `url(${NewsImage})`
         this.update_images()
-    }
-    
-    changeNews(){
-        this.load_news()
+
     }
 
     componentDidMount(){
@@ -145,6 +157,17 @@ class Article extends Component {
 
     render() {
         document.title = this.state.title;
+        if(this.state.end_of_articles){
+            document.title = "Rank our articles and help us do better job!!"
+            if(clearInterval)
+                clearInterval(this.interval)
+
+            return (
+            <div>
+                <Ranker />
+            </div>
+                )
+        }
         if(this.state.loading){
             return <div>Loading...</div>
         }
@@ -152,9 +175,9 @@ class Article extends Component {
         return(
             <div id="Article">
                 <div id="Navbar">
-                    <button className="Button" id="Prev">&lt;</button>
+                    <button className="Button" id="Prev" onClick={this.prevNews.bind(this)}>&lt;</button>
                     <h1>News Ranker</h1>
-                    <button className="Button" id="Next" onClick={this.changeNews.bind(this)}>&gt;</button>
+                    <button className="Button" id="Next" onClick={this.nextNews.bind(this)}>&gt;</button>
                 </div>  
                 <div id="Article-Header">
                     <div id="Article-Heading">
