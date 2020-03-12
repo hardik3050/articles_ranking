@@ -29,6 +29,22 @@ class Ranker extends Component {
         ],
     }
 
+    calculate_rank(rank_score){
+        let rank = {}
+        for(let i=0;i<5;i++){
+            let r = 1
+            let checked=[]
+            for(let j=0;j<5;j++){
+                if(i!==j && rank_score[i]<rank_score[j]){
+                    r++;
+                    checked.push(rank_score[j])
+                }
+            }
+            rank[i]=r
+        }
+        return rank
+    }
+
     submitRanking(e){
         e.preventDefault()
         let rank = {}
@@ -40,16 +56,12 @@ class Ranker extends Component {
                     return null
                 })
                 rank[i] = rank[i]/4;
-                // rank[i] = 0
-                // let field_name = "" + i + "_" + element
-                // rank[i] = rank[i] + parseInt(localStorage.getItem(field_name))
-                // rank.concat(this.state.rank_headers.map((element)=>{
-                //     return parseInt(localStorage.getItem(field_name))
-                // }))
             }
+        
 
         this.setState({
-            done:true
+            done:true,
+            ratings:this.calculate_rank(rank)
         })
     }
 
@@ -97,18 +109,43 @@ class Ranker extends Component {
         })
     }
 
+    get_rank(){
+        return this.state.titles.map((element, ind)=>{
+            return(
+                <tr key={String(ind+1)}>
+                    <td key={String((ind+1)*2)}>
+                        {element}
+                    </td>
+                    <td key={String((ind+1)*3)}>
+                        {this.state.ratings[ind]}
+                    </td>
+                </tr>
+            )
+        })
+    }
+
     render() {
         if(this.state.done){
             return(
-                <div class='container'>
-                    Thank You!!<br/>
-                    We appriciate your feedback!!
+                <div className='container'>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Rank</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {this.get_rank()}
+                        </tbody>
+                    </table>
                 </div>
             )
         }
+
         return (
-            <div class='card'>
-            <div class='container'>
+            <div className='card'>
+            <div className='container'>
                 <form onSubmit={this.submitRanking.bind(this)}>
                     <table>
                         <thead>

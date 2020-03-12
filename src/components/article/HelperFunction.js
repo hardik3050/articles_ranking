@@ -15,7 +15,7 @@ function get_paragraphs(){
 
 function prepare_list(l_items){
     return l_items.map((itm, ind)=>{
-        return (<ul><li key={String(ind)}>{itm}</li></ul>)
+        return (<ul key={String(ind)}><li key={String(ind)}>{itm}</li></ul>)
     })
 }
 
