@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import './Article.css';
+import '../../App.css'
 import NewsImage from '../../news.png';
 import Ranker from '../ranker/Ranker';
 
@@ -94,7 +95,7 @@ class Article extends Component {
 
     prepare_list(l_items){
         return l_items.map((itm, ind)=>{
-        return (<li key={String(ind)}>{itm}</li>)
+        return (<ul><li key={String(ind)}>{itm}</li></ul>)
         })
     }
 
@@ -173,25 +174,21 @@ class Article extends Component {
         }
         else{
         return(
-            <div id="Article">
+            <div id="Article" class='conatiner'>
                 <div id="Navbar">
                     <button className="Button" id="Prev" onClick={this.prevNews.bind(this)}>&lt;</button>
-                    <h1>News Ranker</h1>
+                    <h1>{this.state.heading}</h1>
                     <button className="Button" id="Next" onClick={this.nextNews.bind(this)}>&gt;</button>
                 </div>  
                 <div id="Article-Header">
-                    <div id="Article-Heading">
-                        {this.state.heading}
-                    </div>
+                    
                 </div>
-                <div id="Article-Body">
-                    <div id="Article-Paragraphs">
-                        {this.state.paragraphs}
-                    </div>
-                    <div id="Article-List">
-                        <ul>{this.state.lists}</ul>
-                    </div>
+
+                <div class="row" id="Article-Body">
+                    <div class="one-half column" id="Article-Paragraphs">{this.state.paragraphs}</div>
+                    <div class="one-half column" id="Article-List">{this.state.lists}</div>
                 </div>
+
             </div>
         );
         }

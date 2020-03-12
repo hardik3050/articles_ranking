@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './Ranker.css';
+import '../../App.css'
 
 class Ranker extends Component {
 
@@ -99,14 +100,15 @@ class Ranker extends Component {
     render() {
         if(this.state.done){
             return(
-                <div>
+                <div class='container'>
                     Thank You!!<br/>
                     We appriciate your feedback!!
                 </div>
             )
         }
         return (
-            <div>
+            <div class='card'>
+            <div class='container'>
                 <form onSubmit={this.submitRanking.bind(this)}>
                     <table>
                         <thead>
@@ -119,9 +121,11 @@ class Ranker extends Component {
                         </tbody>
                     </table>
                     {/* <subi onClick={this.submitRanking.bind(this)}>Submit</button> */}
-                    <button type="submit">Submit</button>
+                    <button type="submit" value='submit input'>Submit</button>
                 </form>
             </div>
+        </div>
+            
         )
     }
 }

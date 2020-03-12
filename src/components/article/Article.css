@@ -65,13 +65,13 @@
 
 #Article-Paragraphs {
     flex: 1;
-    font-size: 3vh;
+    font-size: 12pt;
     overflow-y: auto;
 }
 
 #Article-List {
     flex: 1;
-    font-size: 3vh;
+    font-size: 12pt;
     overflow-y: auto;
 }
 
