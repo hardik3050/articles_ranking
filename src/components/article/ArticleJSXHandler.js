@@ -19,7 +19,7 @@ export default function render_jsx(){
         }
         else{
         return(
-            <div id="Article" class='conatiner'>
+            <div id="Article" className='conatiner'>
                 <div id="Navbar">
                     <button className="Button" id="Prev" onClick={this.prevNews.bind(this)}>&lt;</button>
                     <h1>{this.state.heading}</h1>
@@ -29,9 +29,9 @@ export default function render_jsx(){
                     
                 </div>
 
-                <div class="row" id="Article-Body">
-                    <div class="one-half column" id="Article-Paragraphs">{this.state.paragraphs}</div>
-                    <div class="one-half column" id="Article-List">{this.state.lists}</div>
+                <div className="row" id="Article-Body">
+                    <div className="one-half column" id="Article-Paragraphs">{this.state.paragraphs}</div>
+                    <div className="one-half column" id="Article-List">{this.state.lists}</div>
                 </div>
 
             </div>
