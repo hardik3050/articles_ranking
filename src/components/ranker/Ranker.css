@@ -1,0 +1,22 @@
+button,
+input{
+  color: inherit; 
+  font: inherit; 
+  margin: 0;
+}
+
+button {
+  overflow: visible;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+td,
+th {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #E1E1E1; }
+
