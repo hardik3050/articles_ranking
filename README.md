@@ -15,4 +15,5 @@ Its about the ranking the articles on various critra
 2. Ranking
 
 # Use Yarn to start a project
-
+* yarn start
+* json-server db.json
