@@ -2,17 +2,17 @@
 Its about the ranking the articles on various critra 
 
 # Technology used
-yarn - for pakage manage and build
-react - as create-react-app
-babel - inbuilt for converting jsx into js
-axios - for fetch and post request
-json-server - storing the data
-css - basic styling
-git - managing the code
+1. yarn - for pakage manage and build
+2. react - as create-react-app
+3. babel - inbuilt for converting jsx into js
+4. axios - for fetch and post request
+5. json-server - storing the data
+6. css - basic styling
+7. git - managing the code
 
 # Componenet used in react
-Article
-Ranking
+1. Article
+2. Ranking
 
-Use Yarn to start a project
+# Use Yarn to start a project
 
