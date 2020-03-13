@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './Ranker.css';
 import '../../App.css'
+const axios = require('axios').default;
 
 class Ranker extends Component {
 
@@ -8,11 +9,17 @@ class Ranker extends Component {
         let dummy_dict = this.state.ratings
         dummy_dict[ind] = e.target.value
         localStorage.setItem(ind, dummy_dict[ind])
+        axios.post(' http://localhost:3001/ranking_data',{ dummy_dict })
+        .then(res => {
+          console.log(res);
+          console.log(res.data);
+        })
         this.setState({
             ratings:dummy_dict
         })
         dummy_dict=null
     }
+
 
     state = {
         done:false,
@@ -34,11 +41,12 @@ class Ranker extends Component {
         for(let i=0;i<5;i++){
             let r = 1
             let checked=[]
-            for(let j=0;j<5;j++){
-                if(i!==j && rank_score[i]<rank_score[j]){
-                    r++;
-                    checked.push(rank_score[j])
-                }
+                
+                for(let j=0;j<5;j++){
+                    if(i!==j && rank_score[i]<rank_score[j]){
+                        r++;
+                        checked.push(rank_score[j])
+                    }
             }
             rank[i]=r
         }
@@ -95,7 +103,7 @@ class Ranker extends Component {
                 </tr>
             )
         })
-        // return <br/>
+        
     }
 
     componentDidMount() {
@@ -127,7 +135,7 @@ class Ranker extends Component {
     render() {
         if(this.state.done){
             return(
-                <div className='container'>
+                <div class='container center'>
                     <table>
                         <thead>
                             <tr>
@@ -144,8 +152,13 @@ class Ranker extends Component {
         }
 
         return (
-            <div className='card'>
+            
             <div className='container'>
+            <div id="Navbar">
+                    
+                    <h1>Give your Feedback!</h1>
+                    
+                </div> 
                 <form onSubmit={this.submitRanking.bind(this)}>
                     <table>
                         <thead>
@@ -157,11 +170,11 @@ class Ranker extends Component {
                             {this.get_rows()}
                         </tbody>
                     </table>
-                    {/* <subi onClick={this.submitRanking.bind(this)}>Submit</button> */}
+                    
                     <button type="submit" value='submit input'>Submit</button>
                 </form>
             </div>
-        </div>
+       
             
         )
     }
