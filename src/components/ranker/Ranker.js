@@ -9,11 +9,12 @@ class Ranker extends Component {
         let dummy_dict = this.state.ratings
         dummy_dict[ind] = e.target.value
         localStorage.setItem(ind, dummy_dict[ind])
-        axios.post(' http://localhost:3001/ranking_data',{ dummy_dict })
-        .then(res => {
-          console.log(res);
-          console.log(res.data);
-        })
+        
+     //   axios.post(' http://localhost:3001/ranking_data',{ dummy_dict })
+       // .then(res => {
+         // console.log(res);
+         // console.log(res.data);
+        //})
         this.setState({
             ratings:dummy_dict
         })
@@ -54,6 +55,7 @@ class Ranker extends Component {
     }
 
     submitRanking(e){
+    
         e.preventDefault()
         let rank = {}
             for(let i=0;i<5;i++){
@@ -64,8 +66,13 @@ class Ranker extends Component {
                     return null
                 })
                 rank[i] = rank[i]/4;
+                
             }
-        
+            axios.post(' http://localhost:3001/ranking_data',{ rank })
+            .then(res => {
+              console.log(res);
+              console.log(res.data);
+            })
 
         this.setState({
             done:true,
@@ -135,7 +142,7 @@ class Ranker extends Component {
     render() {
         if(this.state.done){
             return(
-                <div class='container center'>
+                <div className='container center'>
                     <table>
                         <thead>
                             <tr>
