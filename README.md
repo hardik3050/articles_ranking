@@ -15,5 +15,8 @@ Its about the ranking the articles on various critra
 2. Ranking
 
 # Use Yarn to start a project
+* npm install --save yarn-install
+* yarn add react
+* json-server --watch db.json --port 3001
 * yarn start
-* json-server db.json
+ 
